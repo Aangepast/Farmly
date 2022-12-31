@@ -1,0 +1,27 @@
+name: Farmly
+version: '${project.version}'
+main: dev.aangepast.farmly.Main
+api-version: 1.19
+depend: ['FastAsyncWorldEdit']
+commands:
+  deleteprofile:
+    usage: /<command>
+    permission: admin
+  newprofile:
+    usage: /<command>
+    permission: admin
+  profile:
+    usage: /<command>
+  setjoinspawn:
+    usage: /<command>
+    permission: admin
+    permission-message: 'This command is not executable for you.'
+  newspot:
+    usage: /<command>
+  setnewspot:
+    usage: /<command>
+  getbuilding:
+    usage: /<command>
+    permission: admin
+  date:
+    usage: /<command>
