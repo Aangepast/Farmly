@@ -1,7 +1,7 @@
 package dev.aangepast.farmly.listeners;
 
 import dev.aangepast.farmly.Main;
-import dev.aangepast.farmly.data.PlayerData;
+import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.utilities.ItemBuilder;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import net.md_5.bungee.api.ChatColor;
@@ -35,8 +35,8 @@ public class onInventoryClick implements Listener {
 
             if(e.getRawSlot() == 13){
                 e.getWhoClicked().closeInventory();
-                PlayerData data = PlayerUtility.getPlayerData((Player) e.getWhoClicked());
-                e.getWhoClicked().teleport(data.getSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                FarmData farm = PlayerUtility.getFarmData((Player) e.getWhoClicked());
+                e.getWhoClicked().teleport(farm.getSpawn(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 e.getWhoClicked().sendMessage(ChatColor.GRAY + "Traveling...");
                 e.getWhoClicked().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3, 5));
                 ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), "block.stone_pressure_plate.click_on", 1, 1);

@@ -25,3 +25,5 @@ commands:
     permission: admin
   date:
     usage: /<command>
+  farm:
+    usage: /<command>

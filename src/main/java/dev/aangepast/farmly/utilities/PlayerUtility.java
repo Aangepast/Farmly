@@ -1,6 +1,7 @@
 package dev.aangepast.farmly.utilities;
 
 import dev.aangepast.farmly.Main;
+import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.data.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class PlayerUtility {
     private static Map<String, PlayerData> playerData= new HashMap<>();
+    private static Map<String, FarmData> farmData = new HashMap<>();
 
     public static PlayerData getPlayerData(Player p){
         if(!playerData.containsKey(p.getUniqueId().toString())){
@@ -30,8 +32,29 @@ public class PlayerUtility {
         }
     }
 
+    public static FarmData getFarmData(Player p){
+        if(!farmData.containsKey(p.getUniqueId().toString())){
+            FarmData farm = new FarmData();
+            farmData.put(p.getUniqueId().toString(), farm);
+            return farm;
+        }
+        return farmData.get(p.getUniqueId().toString());
+    }
+
+    public static void setFarmData(Player p, FarmData farm){
+        if(farm == null){
+            farmData.remove(p.getUniqueId().toString());
+        } else {
+            farmData.put(p.getUniqueId().toString(), farm);
+        }
+    }
+
     public static String getFolderPath(Player p, Main plugin){
         return plugin.getDataFolder().getAbsolutePath() + "/player/" + p.getUniqueId();
+    }
+
+    public static String getFarmFolderPath(Player p, Main plugin){
+        return plugin.getDataFolder().getAbsolutePath() + "/farms/" + p.getUniqueId();
     }
 
     public static void deletePlayerData(Player p){

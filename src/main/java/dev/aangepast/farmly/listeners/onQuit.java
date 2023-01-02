@@ -1,6 +1,7 @@
 package dev.aangepast.farmly.listeners;
 
 import dev.aangepast.farmly.Main;
+import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.data.PlayerData;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +29,6 @@ public class onQuit implements Listener {
 
         config.set("stats.farmId", data.getFarmId());
         config.set("stats.cash", data.getCash());
-        config.set("stats.spawn", data.getSpawn());
         config.set("stats.group", data.getGroup());
         config.set("stats.groupId", data.getGroupId());
         config.set("stats.level", data.getLevel());
@@ -40,8 +40,24 @@ public class onQuit implements Listener {
         config.set("stats.skillpoints", data.getSkillPoints());
         config.set("stats.skillxp", data.getSkillXp());
         config.set("stats.xp", data.getXp());
-        config.set("stats.minPos", data.getMinPos());
-        config.set("stats.maxPos", data.getMaxPos());
+
+        if(PlayerUtility.getFarmData(e.getPlayer()).getOwner() != null){
+            FarmData farmData = PlayerUtility.getFarmData(e.getPlayer());
+            File farm = new File(PlayerUtility.getFarmFolderPath(e.getPlayer(), plugin) + "/farm.yml");
+            FileConfiguration farmConfig = YamlConfiguration.loadConfiguration(farm);
+
+            farmConfig.set("farm.minPos", farmData.getMinPos());
+            farmConfig.set("farm.maxPos", farmData.getMaxPos());
+            farmConfig.set("farm.owner", farmData.getOwner());
+            farmConfig.set("farm.spawn", farmData.getSpawn());
+            farmConfig.set("farm.players", farmData.getPlayers());
+
+            try {
+                farmConfig.save(farm);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
 
         try {
             config.save(file);

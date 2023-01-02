@@ -14,12 +14,13 @@ import com.sk89q.worldedit.math.transform.Transform;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import dev.aangepast.farmly.Main;
+import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.data.PlayerData;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,12 +28,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class newSpot implements CommandExecutor {
 
@@ -47,29 +47,47 @@ public class newSpot implements CommandExecutor {
 
         Player player = (Player) sender;
 
+        if(PlayerUtility.getFarmData(player).getOwner() != null){
+            player.sendMessage(ChatColor.DARK_RED + "You already have a farm!");
+            return true;
+        }
+
+        FarmData farm = new FarmData();
+
         player.sendMessage(ChatColor.GREEN + "Generating new farm, please be patient...");
 
         Location spot = nextGridLocation(plugin.nextSpot);
 
-        player.sendMessage(ChatColor.DARK_GRAY + "Found available spot!");
+        Chunk chunk = spot.getChunk();
+        chunk.load();
+
+                player.sendMessage(ChatColor.DARK_GRAY + "Found available spot!");
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999999, 5));
 
         File file = new File(plugin.getDataFolder().getAbsolutePath() + "/server/Farmv1.schem");
 
         player.sendMessage(ChatColor.DARK_GRAY + "Preparing farm...");
 
-        PlayerData data = PlayerUtility.getPlayerData(player);
-
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
                 player.sendMessage(ChatColor.DARK_GRAY + "Generating farm, please wait...");
                 if (paste(file, spot)) {
-                    Location minPos = spot.add(32, 0, 31);
-                    Location maxPos = spot.add(-101,20,-101);
-                    data.setMaxPos(maxPos);
-                    data.setMinPos(minPos);
-                    player.teleport(spot.add(0.5,1,0.5), PlayerTeleportEvent.TeleportCause.PLUGIN);
+
+                    Location minPos = new Location(spot.getWorld(), spot.getBlockX() + 32, spot.getBlockY()-1, spot.getBlockZ() +31);
+                    Location maxPos = new Location(spot.getWorld(), spot.getBlockX() - 101, spot.getBlockY()+20, spot.getBlockZ() -100);
+
+                    Location fixedSpot = spot.add(0.5,0,0.5);
+                    farm.setSpawn(fixedSpot);
+                    farm.setOwner(player);
+                    farm.setMaxPos(maxPos);
+                    farm.setMinPos(minPos);
+                    List<String> players = new ArrayList<>();
+                    players.add(player.getUniqueId().toString());
+                    farm.setPlayers(players);
+                    farm.setSpawn(fixedSpot);
+                    PlayerUtility.setFarmData(player, farm);
+                    player.teleport(fixedSpot, PlayerTeleportEvent.TeleportCause.PLUGIN);
                     player.removePotionEffect(PotionEffectType.BLINDNESS);
                     player.sendMessage(ChatColor.GRAY + "Operation completed, have fun!");
                     player.sendMessage(ChatColor.GREEN + "Welcome to " + ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "Farmly" + ChatColor.GREEN + "!");
@@ -85,7 +103,7 @@ public class newSpot implements CommandExecutor {
     private Location nextGridLocation(final Location lastFarm) {
         int x = lastFarm.getBlockX();
         int z = lastFarm.getBlockZ();
-        int d = 180;
+        int d = 200;
         if (x < z) {
             if (-1 * x < z) {
                 lastFarm.setX(lastFarm.getX() + d);

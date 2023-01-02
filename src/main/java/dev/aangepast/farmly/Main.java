@@ -15,8 +15,10 @@ import java.util.HashMap;
 
 public final class Main extends JavaPlugin {
 
-    // TODO FIX PLAYER SAVE DATA? WERKT MOMENTEEL NIET HELEMAAL OFZO
     // TODO Je was bezig met minPos en maxPos van de farm plot van de user in #newSpot
+    // TODO Sla player data op als de server uit gaat
+
+    // TODO nieuwe FarmData object aangemaakt en werkt :)))
 
     public HashMap<String, Entity> currentInteract = new HashMap<>();
 
@@ -48,6 +50,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("setnewspot").setExecutor(new setNewSpotCommand(this));
         Bukkit.getPluginCommand("getbuilding").setExecutor(new getBuilding());
         Bukkit.getPluginCommand("date").setExecutor(new getDate(this));
+        Bukkit.getPluginCommand("farm").setExecutor(new farmCommand(this));
 
         // Get farmId
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");

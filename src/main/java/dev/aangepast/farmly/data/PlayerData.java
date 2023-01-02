@@ -1,13 +1,6 @@
 package dev.aangepast.farmly.data;
 
-import org.bukkit.Location;
-
 public class PlayerData {
-
-    private Location minPos;
-    private Location maxPos;
-
-    private Location spawn;
     private double cash;
     private double xp;
     private int level;
@@ -129,28 +122,5 @@ public class PlayerData {
 
     public void setHasAccessTradeMarket(boolean hasAccessTradeMarket) {
         this.hasAccessTradeMarket = hasAccessTradeMarket;
-    }
-    public Location getSpawn() {
-        return spawn;
-    }
-
-    public void setSpawn(Location spawn) {
-        this.spawn = spawn;
-    }
-
-    public Location getMinPos() {
-        return minPos;
-    }
-
-    public void setMinPos(Location minPos) {
-        this.minPos = minPos;
-    }
-
-    public Location getMaxPos() {
-        return maxPos;
-    }
-
-    public void setMaxPos(Location maxPos) {
-        this.maxPos = maxPos;
     }
 }
