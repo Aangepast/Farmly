@@ -74,7 +74,7 @@ public class newSpot implements CommandExecutor {
                 player.sendMessage(ChatColor.DARK_GRAY + "Generating farm, please wait...");
                 if (paste(file, spot)) {
 
-                    Location minPos = new Location(spot.getWorld(), spot.getBlockX() + 32, spot.getBlockY()-1, spot.getBlockZ() +31);
+                    Location minPos = new Location(spot.getWorld(), spot.getBlockX() + 32, spot.getBlockY()-1, spot.getBlockZ() +32);
                     Location maxPos = new Location(spot.getWorld(), spot.getBlockX() - 101, spot.getBlockY()+20, spot.getBlockZ() -100);
 
                     Location fixedSpot = spot.add(0.5,0,0.5);
@@ -83,6 +83,7 @@ public class newSpot implements CommandExecutor {
                     farm.setMaxPos(maxPos);
                     farm.setMinPos(minPos);
                     List<String> players = new ArrayList<>();
+                    plugin.addFarmID();
                     players.add(player.getUniqueId().toString());
                     farm.setPlayers(players);
                     farm.setSpawn(fixedSpot);
