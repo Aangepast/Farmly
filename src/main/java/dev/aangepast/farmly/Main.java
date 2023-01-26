@@ -40,6 +40,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new onAnimalPlace(this), this);
         Bukkit.getPluginManager().registerEvents(new animalFixer(this), this);
         Bukkit.getPluginManager().registerEvents(new onInventoryClose(this), this);
+        Bukkit.getPluginManager().registerEvents(new onBuildingPlace(this), this);
         Bukkit.getPluginCommand("newprofile").setExecutor(new newProfile(this));
         Bukkit.getPluginCommand("deleteprofile").setExecutor(new deleteProfile(this));
         Bukkit.getPluginCommand("profile").setExecutor(new profileCommand());
@@ -48,6 +49,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("setnewspot").setExecutor(new setNewSpotCommand(this));
         Bukkit.getPluginCommand("getbuilding").setExecutor(new getBuilding());
         Bukkit.getPluginCommand("date").setExecutor(new getDate(this));
+        Bukkit.getPluginCommand("farm").setExecutor(new farmCommand(this));
 
         // Get farmId
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");
