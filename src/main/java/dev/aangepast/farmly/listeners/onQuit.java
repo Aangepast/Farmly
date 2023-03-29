@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class onQuit implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e){
+        e.getPlayer().removePotionEffect(PotionEffectType.NIGHT_VISION);
+        e.getPlayer().resetPlayerWeather();
         PlayerData data = PlayerUtility.getPlayerData(e.getPlayer());
         File file = new File(PlayerUtility.getFolderPath(e.getPlayer(), plugin) + "/data.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);

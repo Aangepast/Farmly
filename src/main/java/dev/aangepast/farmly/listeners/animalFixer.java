@@ -22,8 +22,8 @@ public class animalFixer implements Listener {
     @EventHandler
     public void animalFix(PlayerInteractEntityEvent e){
         if(e.getHand().equals(EquipmentSlot.HAND)){
-            if(e.getRightClicked().getType() == EntityType.CHICKEN){
-                if(e.getPlayer().getInventory().getItemInMainHand().getType() == Material.CHICKEN_SPAWN_EGG){
+            if(e.getRightClicked().getType() == EntityType.CHICKEN || e.getRightClicked().getType() ==  EntityType.COW || e.getRightClicked().getType() == EntityType.PIG){
+                if(e.getPlayer().getInventory().getItemInMainHand().getType() == Material.CHICKEN_SPAWN_EGG || e.getPlayer().getInventory().getItemInMainHand().getType() == Material.COW_SPAWN_EGG || e.getPlayer().getInventory().getItemInMainHand().getType() == Material.PIG_SPAWN_EGG){
                     e.setCancelled(true);
                     e.getPlayer().sendMessage(ChatColor.RED + "You cannot interact with animals while holding a spawn egg.");
                 } else if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
@@ -33,7 +33,9 @@ public class animalFixer implements Listener {
                         e.getPlayer().sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "If you think this is bugged, please relog to hopefully fix this issue. If not, please contact a staff member.");
                     } else {
                         plugin.currentInteract.put(e.getPlayer().getUniqueId().toString(), e.getRightClicked());
-                        new animalInventory(e.getRightClicked(), e.getPlayer(), "Chicken", plugin);
+                        String name = e.getRightClicked().getName();
+                        String fixedName = name.substring(0,1).toUpperCase() + name.substring(1);
+                        new animalInventory(e.getRightClicked(), e.getPlayer(), fixedName, plugin);
                     }
                 } else {
                     e.getPlayer().sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "Right-click this chicken with nothing in your hand to interact.");
