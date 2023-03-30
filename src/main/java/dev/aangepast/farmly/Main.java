@@ -1,7 +1,9 @@
 package dev.aangepast.farmly;
 
 import dev.aangepast.farmly.commands.*;
+import dev.aangepast.farmly.data.Building;
 import dev.aangepast.farmly.listeners.*;
+import dev.aangepast.farmly.managers.buildingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,6 +43,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new animalFixer(this), this);
         Bukkit.getPluginManager().registerEvents(new onInventoryClose(this), this);
         Bukkit.getPluginManager().registerEvents(new onBuildingPlace(this), this);
+        Bukkit.getPluginManager().registerEvents(new onBuildingBuild(), this);
         Bukkit.getPluginCommand("newprofile").setExecutor(new newProfile(this));
         Bukkit.getPluginCommand("deleteprofile").setExecutor(new deleteProfile(this));
         Bukkit.getPluginCommand("profile").setExecutor(new profileCommand());
@@ -87,6 +90,23 @@ public final class Main extends JavaPlugin {
             currentDay = 1;
         }
 
+        // Get buildings from file
+        File file4 = new File(getDataFolder().getAbsolutePath() + "/server/buildings.yml");
+        if(file4.exists()){
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file4);
+            for (String key : config.getKeys(false)){
+                Building building = new Building();
+                building.setName(key);
+                building.setId(config.getInt(key+".id"));
+                building.setxSize(config.getInt(key+".xsize"));
+                building.setySize(config.getInt(key+".ysize"));
+                building.setzSize(config.getInt(key+".zsize"));
+                building.setLevel(config.getInt(key+".level"));
+                buildingManager.addBuilding(building);
+                getLogger().info("Added a new building called " + building.getName());
+            }
+        }
+
     }
 
     @Override
@@ -97,30 +117,28 @@ public final class Main extends JavaPlugin {
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("farmId", currentFarmId);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveConfig(config, file);
 
         // Save current next spot
         File file2 = new File(getDataFolder().getAbsolutePath() + "/server/spot.yml");
         FileConfiguration config2 = YamlConfiguration.loadConfiguration(file2);
         config2.set("next", nextSpot);
-        try {
-            config2.save(file2);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveConfig(config2, file2);
 
         // Save date
         File file3 = new File(getDataFolder().getAbsolutePath() + "/server/date.yml");
         FileConfiguration config3 = YamlConfiguration.loadConfiguration(file3);
         config3.set("day", currentDay);
+        saveConfig(config3, file3);
+    }
+
+    public void saveConfig(FileConfiguration config, File file){
         try {
-            config3.save(file3);
+            config.save(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }
