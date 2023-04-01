@@ -13,8 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.Vector;
 
 public class onBuildingBuild implements Listener {
 
@@ -45,15 +43,14 @@ public class onBuildingBuild implements Listener {
         }
 
         Location location = player.getLocation();
+        Location pos2 = location;
         location.setX(player.getLocation().getBlockX());
         location.setY(player.getLocation().getBlockY());
         location.setZ(player.getLocation().getBlockZ());
 
         switch (direction) {
             case "N":
-                    Location location2 = location;
-                    location2.add(0,0,building.getxSize());
-
+                pos2.add(building.getzSize(),building.getySize(),-building.getxSize());
                 break;
             case "S":
                 for (int i = 0; i < building.getxSize(); i++) {
@@ -111,12 +108,8 @@ public class onBuildingBuild implements Listener {
                 break;
         }
 
-        for (int i = 0; i < building.getxSize();i++){
-            if(!location.add(1,0,0).getBlock().getType().equals(Material.AIR)){
-                buildFail(player, location);
-                return;
-            }
-            location.getBlock().setType(Material.GOLD_BLOCK);
+        if(!checkForBlocks(location, pos2)){
+
         }
         player.sendMessage(ChatColor.GREEN + "Building placed!");
     }
@@ -127,15 +120,53 @@ public class onBuildingBuild implements Listener {
         player.playSound(player.getLocation(), "entity.villager.no",1,1);
     }
 
-    public boolean checkForBlocks(Location pos1, Location pos2, Player player){
+    public boolean checkForBlocks(Location pos1, Location pos2){
 
-        Vector v = pos1.toVector();
-        Vector p = player.getLocation().toVector();
-        Vector d = v.subtract(p);
+        int yPos1 = pos1.getBlockY();
+        int yPos2 = pos2.getBlockY();
+        int yTimes = yPos2 - yPos1;
 
-        BlockIterator BI = new BlockIterator(player.getLocation().getWorld(), p, d, 0, (Double) pos1.distance(player.getLocation().))
+        int zPos1 = pos1.getBlockZ();
+        int zPos2 = pos1.getBlockZ();
+        int zTimes = zPos2 - zPos1;
 
-        return false;
+        int xPos1 = pos1.getBlockX();
+        int xPos2 = pos1.getBlockX();
+        int xTimes = xPos2 - xPos1;
+
+        for (int i = 0; i < yTimes; i++){
+            pos1.add(0,1,0);
+            if(noMaterial(pos1)){
+                pos1.getBlock().setType(Material.BEDROCK);
+                return false;
+            }
+            pos1.getBlock().setType(Material.GOLD_BLOCK);
+            for(int z = 0; z < zTimes ; z++) {
+                pos1.add(0, 0, 1);
+                if (!noMaterial(pos1)){
+                    pos1.getBlock().setType(Material.BEDROCK);
+                    return false;
+                }
+                pos1.getBlock().setType(Material.GOLD_BLOCK);
+                for(int x = 0; x < xTimes ; x++){
+                    pos1.add(1,0,0);
+                    if(!noMaterial(pos1)){
+                        pos1.getBlock().setType(Material.BEDROCK);
+                        return false;
+                    }
+                    pos1.getBlock().setType(Material.GOLD_BLOCK);
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean noMaterial(Location location) {
+        if (!location.getBlock().getType().equals(Material.AIR)) {
+            location.getBlock().setType(Material.BEDROCK);
+            return false;
+        }
+        return true;
     }
 
 }
