@@ -127,4 +127,15 @@ public class onBuildingBuild implements Listener {
         player.playSound(player.getLocation(), "entity.villager.no",1,1);
     }
 
+    public boolean checkForBlocks(Location pos1, Location pos2, Player player){
+
+        Vector v = pos1.toVector();
+        Vector p = player.getLocation().toVector();
+        Vector d = v.subtract(p);
+
+        BlockIterator BI = new BlockIterator(player.getLocation().getWorld(), p, d, 0, (Double) pos1.distance(player.getLocation().))
+
+        return false;
+    }
+
 }

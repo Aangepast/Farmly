@@ -20,6 +20,9 @@ public final class Main extends JavaPlugin {
     // TODO FIX PLAYER SAVE DATA? WERKT MOMENTEEL NIET HELEMAAL OFZO
     // TODO Je was bezig met minPos en maxPos van de farm plot van de user in #newSpot
 
+    // TODO on building build werkt nog niet
+    // TODO als je een nieuwe spot aanmakt wordt het nog niet op spelers naam gezet
+
     public HashMap<String, Entity> currentInteract = new HashMap<>();
 
     public int currentFarmId;
