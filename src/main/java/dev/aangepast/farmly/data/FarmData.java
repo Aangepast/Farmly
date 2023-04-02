@@ -12,6 +12,7 @@ public class FarmData {
     private Location spawn;
     private List<String> players;
     private OfflinePlayer owner;
+    private int farmId;
 
     public List<String> getPlayers() {
         return players;
@@ -51,5 +52,13 @@ public class FarmData {
 
     public void setSpawn(Location spawn) {
         this.spawn = spawn;
+    }
+
+    public int getFarmId() {
+        return farmId;
+    }
+
+    public void setFarmId(int farmId) {
+        this.farmId = farmId;
     }
 }

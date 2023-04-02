@@ -2,9 +2,14 @@ package dev.aangepast.farmly.listeners;
 
 import dev.aangepast.farmly.Main;
 import dev.aangepast.farmly.data.FarmData;
+import dev.aangepast.farmly.inventories.farmSettingsInventory;
+import dev.aangepast.farmly.managers.teleportManager;
 import dev.aangepast.farmly.utilities.ItemBuilder;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -72,6 +77,43 @@ public class onInventoryClick implements Listener {
                     e.getWhoClicked().getInventory().addItem(item);
                 }
                 e.getWhoClicked().closeInventory();
+            }
+        } else if (e.getView().getTitle().contains(ChatColor.DARK_GRAY + "Farm menu")) {
+            e.setCancelled(true);
+            Player player = (Player) e.getWhoClicked();
+            player.playSound(player.getLocation(), "block.stone_pressure_plate.click_off",1,1);
+            switch(e.getRawSlot()){
+                case 4:
+                    if(teleportManager.containsPlayer(player)){player.sendMessage(ChatColor.RED + "You already have a teleport commencing!");player.closeInventory();return;}
+                    FarmData farm = PlayerUtility.getFarmData(player);
+                    Location spawn = new Location(farm.getSpawn().getWorld(), farm.getSpawn().getBlockX(), farm.getSpawn().getBlockY(), farm.getSpawn().getBlockZ());
+                    Chunk chunk = spawn.getChunk();
+                    chunk.load();
+                    player.sendMessage(ChatColor.GRAY + "Preparing your farm chunks, teleporting you in 3 seconds...");
+                    player.closeInventory();
+                    teleportManager.addPlayer(player);
+                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.teleport(spawn, PlayerTeleportEvent.TeleportCause.COMMAND);
+                            player.sendMessage(ChatColor.GRAY + "You have been teleported to your farm!");
+                            teleportManager.removePlayer(player);
+                            player.playSound(player.getLocation(), "entity.experience_orb.pickup",1,1);
+                        }
+                    },20*3);
+                    break;
+                case 6:
+                    farmSettingsInventory.openInventory(player);
+                    break;
+                case -999:
+                    player.closeInventory();
+            }
+        } else if (e.getView().getTitle().contains(ChatColor.DARK_GRAY + "Farm settings")){
+            Player player = (Player) e.getWhoClicked();
+            switch(e.getRawSlot()){
+                case -999:
+                    player.closeInventory();
+                    break;
             }
         }
 

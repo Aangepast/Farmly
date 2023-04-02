@@ -87,6 +87,7 @@ public class newSpot implements CommandExecutor {
                     players.add(player.getUniqueId().toString());
                     farm.setPlayers(players);
                     farm.setSpawn(fixedSpot);
+                    farm.setFarmId(PlayerUtility.getPlayerData(player).getFarmId());
                     PlayerUtility.setFarmData(player, farm);
                     player.teleport(fixedSpot, PlayerTeleportEvent.TeleportCause.PLUGIN);
                     player.removePotionEffect(PotionEffectType.BLINDNESS);
