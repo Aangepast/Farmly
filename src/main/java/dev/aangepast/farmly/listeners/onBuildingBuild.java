@@ -48,76 +48,47 @@ public class onBuildingBuild implements Listener {
         location.setX(player.getLocation().getBlockX());
         location.setY(player.getLocation().getBlockY());
         location.setZ(player.getLocation().getBlockZ());
+        final Location pos1;
+        Location location2;
 
         switch (direction) {
             case "N":
-                    Location location2 = location;
-                    location2.add(0,0,building.getxSize());
-
+                location.add(0,0,-1);
+                location.getBlock().setType(Material.DIAMOND_BLOCK);
+                location2 = location;
+                pos1 = location;
+                location2.add(building.getzSize(),building.getySize(),-building.getxSize());
+                location2.getBlock().setType(Material.GOLD_BLOCK);
                 break;
             case "S":
-                for (int i = 0; i < building.getxSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, 1);
-                }
-                for (int i = 0; i < building.getzSize(); i++){
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(-1, 0, 0);
-                }
-                for (int i = building.getxSize(); i > 0; i--) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, -1);
-                }
-                for (int i = 0; i < building.getzSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(1, 0, 0);
-                }
+                location.add(-1,0,0);
+                location.getBlock().setType(Material.DIAMOND_BLOCK);
+                location2 = location;
+                pos1 = location;
+                location2.add(-building.getzSize(),building.getySize(),building.getxSize());
+                location2.getBlock().setType(Material.GOLD_BLOCK);
                 break;
             case "W":
-                for (int i = 0; i < building.getxSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(-1, 0, 0);
-                }
-                for (int i = 0; i < building.getzSize(); i++){
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, -1);
-                }
-                for (int i = building.getxSize(); i > 0; i--) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(1, 0, 0);
-                }
-                for (int i = 0; i < building.getzSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, 1);
-                }
+                location.add(-1,0,-1);
+                location.getBlock().setType(Material.DIAMOND_BLOCK);
+                location2 = location;
+                pos1 = location;
+                location2.add(-building.getxSize(),building.getySize(),-building.getzSize());
+                location2.getBlock().setType(Material.GOLD_BLOCK);
                 break;
             case "E":
-                for (int i = 0; i < building.getxSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(1, 0, 0);
-                }
-                for (int i = 0; i < building.getzSize(); i++){
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, 1);
-                }
-                for (int i = building.getxSize(); i > 0; i--) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(-1, 0, 0);
-                }
-                for (int i = 0; i < building.getzSize(); i++) {
-                    location.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0,0);
-                    location.add(0, 0, -1);
-                }
+                location.getBlock().setType(Material.DIAMOND_BLOCK);
+                location2 = location;
+                pos1 = location;
+                location2.add(building.getxSize(),building.getySize(),building.getzSize());
+                location2.getBlock().setType(Material.GOLD_BLOCK);
+                break;
+            default:
+                player.sendMessage(ChatColor.RED + "Something went wrong while trying to build your building.");
+                player.sendMessage(ChatColor.GRAY + "Report this: CardinalDirection: " + direction + " - ERROR_NO_DIRECTION - " + building.getName());
                 break;
         }
 
-        for (int i = 0; i < building.getxSize();i++){
-            if(!location.add(1,0,0).getBlock().getType().equals(Material.AIR)){
-                buildFail(player, location);
-                return;
-            }
-            location.getBlock().setType(Material.GOLD_BLOCK);
-        }
         player.sendMessage(ChatColor.GREEN + "Building placed!");
     }
 
