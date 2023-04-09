@@ -115,6 +115,17 @@ public class onInventoryClick implements Listener {
                     player.closeInventory();
                     break;
             }
+        } else if (e.getView().getTitle().contains(ChatColor.DARK_GRAY + "Trading: ")){
+            Player player = (Player) e.getWhoClicked();
+            e.setCancelled(true);
+            switch(e.getRawSlot()){
+                case -999:
+                    player.closeInventory();
+                    break;
+                case 13:
+                    // check right of left click
+                    break;
+            }
         }
 
     }
