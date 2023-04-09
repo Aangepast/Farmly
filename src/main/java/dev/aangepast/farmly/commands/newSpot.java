@@ -54,6 +54,8 @@ public class newSpot implements CommandExecutor {
 
         FarmData farm = new FarmData();
 
+        PlayerData data = PlayerUtility.getPlayerData(player);
+
         player.sendMessage(ChatColor.GREEN + "Generating new farm, please be patient...");
 
         Location spot = nextGridLocation(plugin.nextSpot);
@@ -82,6 +84,17 @@ public class newSpot implements CommandExecutor {
                     farm.setOwner(player);
                     farm.setMaxPos(maxPos);
                     farm.setMinPos(minPos);
+                    data.setFarmId(plugin.currentFarmId);
+                    data.setCash(1000.0);
+                    data.setLevel(1);
+                    data.setLevelCrafting(1);
+                    data.setLevelFarming(1);
+                    data.setLevelForgaging(1);
+                    data.setLevelLifestock(1);
+                    data.setSkillPoints(0);
+                    data.setSkillXp(0);
+                    data.setXp(0.0);
+                    data.setHasAccessTradeMarket(false);
                     List<String> players = new ArrayList<>();
                     plugin.addFarmID();
                     players.add(player.getUniqueId().toString());

@@ -1,0 +1,9 @@
+carrot:
+  displayname: "&6Carrot"
+  cropType: "CropType.CARROT"
+  growTime: 20
+  defaultBuyPrice: 5
+  defaultSellPrice: 0.2
+  currentBuyPrice: 5
+  currentSellPrice: 0.2
+  material: "CARROT"

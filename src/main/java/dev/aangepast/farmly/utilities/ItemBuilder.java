@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import dev.aangepast.farmly.data.CropType;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -53,6 +55,8 @@ public class ItemBuilder {
     public ItemBuilder(Material m, int amount, byte durability){
         is = new ItemStack(m, amount, durability);
     }
+
+
     /**
      * Clone the ItemBuilder into a new one.
      * @return The cloned instance.
@@ -236,6 +240,25 @@ public class ItemBuilder {
         }catch(ClassCastException expected){}
         return this;
     }
+
+    public ItemBuilder addCheck(String name, boolean Boolean){
+        ItemMeta meta = is.getItemMeta();
+        List<String> lore;
+        if(meta.getLore().size() > 0){
+            lore = meta.getLore();
+        } else {
+            lore = new ArrayList<>();
+        }
+        if(Boolean){
+            lore.add(ChatColor.translateAlternateColorCodes('&', "&a✔ &8- &7" + name));
+        } else {
+            lore.add(ChatColor.translateAlternateColorCodes('&', "&c❌ &8- &7" + name));
+        }
+        meta.setLore(lore);
+        is.setItemMeta(meta);
+        return this;
+    }
+
     /**
      * Retrieves the itemstack from the ItemBuilder.
      * @return The itemstack created/modified by the ItemBuilder instance.

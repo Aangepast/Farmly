@@ -1,19 +1,25 @@
 package dev.aangepast.farmly.data;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class itemData {
+public class ItemData {
 
     String rawName;
     String displayName;
     ItemStack item;
+    Material material;
 
     int defaultSellAmount;
     int defaultBuyAmount;
 
-    boolean isCrop;
-    int growTime;
-    int cropId;
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 
     public String getRawName() {
         return rawName;
@@ -45,30 +51,6 @@ public class itemData {
 
     public void setDefaultBuyAmount(int defaultBuyAmount) {
         this.defaultBuyAmount = defaultBuyAmount;
-    }
-
-    public boolean isCrop() {
-        return isCrop;
-    }
-
-    public void setCrop(boolean crop) {
-        isCrop = crop;
-    }
-
-    public int getGrowTime() {
-        return growTime;
-    }
-
-    public void setGrowTime(int growTime) {
-        this.growTime = growTime;
-    }
-
-    public int getCropId() {
-        return cropId;
-    }
-
-    public void setCropId(int cropId) {
-        this.cropId = cropId;
     }
 
     public ItemStack getItem() {

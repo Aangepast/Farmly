@@ -2,10 +2,17 @@ package dev.aangepast.farmly;
 
 import dev.aangepast.farmly.commands.*;
 import dev.aangepast.farmly.data.Building;
+import dev.aangepast.farmly.data.CropData;
+import dev.aangepast.farmly.data.CropType;
 import dev.aangepast.farmly.listeners.*;
 import dev.aangepast.farmly.managers.buildingManager;
+import dev.aangepast.farmly.managers.cropManager;
+import dev.aangepast.farmly.managers.marketManager;
+import dev.aangepast.farmly.utilities.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -21,7 +28,7 @@ public final class Main extends JavaPlugin {
     // TODO Je was bezig met minPos en maxPos van de farm plot van de user in #newSpot
 
     // TODO on building build werkt nog niet
-    // TODO als je een nieuwe spot aanmakt wordt het nog niet op spelers naam gezet
+    // TODO als je een nieuwe spot aanmaakt wordt het nog niet op spelers naam gezet
 
     public HashMap<String, Entity> currentInteract = new HashMap<>();
 
@@ -29,6 +36,7 @@ public final class Main extends JavaPlugin {
     public Location loginSpawn;
     public Location nextSpot;
     public int currentDay;
+    public marketManager market;
 
     public void addFarmID(){
         currentFarmId = currentFarmId + 1;
@@ -47,6 +55,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new onInventoryClose(this), this);
         Bukkit.getPluginManager().registerEvents(new onBuildingPlace(this), this);
         Bukkit.getPluginManager().registerEvents(new onBuildingBuild(), this);
+        Bukkit.getPluginManager().registerEvents(new onItemPickup(), this);
         Bukkit.getPluginCommand("newprofile").setExecutor(new newProfile(this));
         Bukkit.getPluginCommand("deleteprofile").setExecutor(new deleteProfile(this));
         Bukkit.getPluginCommand("profile").setExecutor(new profileCommand());
@@ -56,6 +65,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("getbuilding").setExecutor(new getBuilding());
         Bukkit.getPluginCommand("date").setExecutor(new getDate(this));
         Bukkit.getPluginCommand("farm").setExecutor(new farmCommand(this));
+        Bukkit.getPluginCommand("market").setExecutor(new marketCommand(this));
 
         // Get farmId
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");
@@ -110,6 +120,32 @@ public final class Main extends JavaPlugin {
             }
         }
 
+        // Set market instance & initialise hem
+        marketManager market = new marketManager();
+        File file5 = new File(getDataFolder().getAbsolutePath() + "/server/market.yml");
+        if(file5.exists()){
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file5);
+            for(String key : config.getKeys(false)){
+                CropData crop = new CropData();
+                crop.setRawName(key);
+                crop.setDisplayName(Utils.translateHexColorCodes("&#", "", ChatColor.translateAlternateColorCodes('&', config.getString(key+".displayname"))));
+                crop.setMaterial(Material.getMaterial(config.getString(key+".material")));
+                if(config.getString(key+".cropType").contains("CARROT")){
+                    crop.setCropType(CropType.CARROT);
+                } // maak hier later ff een switch van
+                crop.setCrowTime(config.getInt(key+".growTime"));
+                crop.setDefaultBuyPrice(config.getInt(key+".defaultBuyPrice"));
+                crop.setDefaultSellPrice(config.getInt(key+".defaultSellPrice"));
+                cropManager.addCrop(crop);
+                market.addCropBuyPrice(crop, config.getInt(key+".currentBuyPrice"));
+                market.addCropSellPrice(crop, config.getInt(key+".currentSellPrice"));
+            }
+            this.market = market;
+            getLogger().info("Loaded market prices & cropData");
+        } else {
+            getLogger().warning("Market prices & cropData is not setup. Set it up in /server/market.yml");
+        }
+
     }
 
     @Override
@@ -142,6 +178,5 @@ public final class Main extends JavaPlugin {
             throw new RuntimeException(e);
         }
     }
-
 
 }

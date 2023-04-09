@@ -27,3 +27,5 @@ commands:
     usage: /<command>
   farm:
     usage: /<command>
+  market:
+    usage: /<command>
