@@ -1,6 +1,11 @@
 package dev.aangepast.farmly.managers;
 
 import dev.aangepast.farmly.data.CropData;
+import dev.aangepast.farmly.data.PlayerData;
+import dev.aangepast.farmly.utilities.ItemBuilder;
+import dev.aangepast.farmly.utilities.PlayerUtility;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -80,4 +85,57 @@ public class marketManager {
         }
         return amount;
     }
+
+    public static boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount){
+
+        player.sendMessage(ChatColor.GRAY + "Purchasing...");
+
+        PlayerData user = PlayerUtility.getPlayerData(player);
+
+        double tempPrice = manager.getCropBuyPrice(cropData);
+        for(int i = 0;i<amount;i++){
+            tempPrice += 0.01;
+        }
+        double averagePrice = tempPrice / amount;
+
+        if(user.getCash() >= tempPrice){
+
+            ItemStack boughtItem = new ItemBuilder(cropData.getMaterial(), amount).toItemStack();
+
+            int counter = 0;
+            boolean broke = false;
+
+            for(ItemStack item : player.getInventory().getContents()){
+                if(item == null){break;}
+                if(item.getType().equals(Material.AIR)){break;}
+                if(item.equals(boughtItem)){
+                    counter += item.getMaxStackSize()-item.getAmount();
+                    if(counter >= amount){
+                        break;
+                    }
+                }
+            }
+
+            // verzin iets zodat als ie breaked dat het niet gelijk not enough inv space is
+
+            if(amount > counter){
+                player.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+                return false;
+            }
+
+            user.setCash(user.getCash()-tempPrice);
+            double newMarketPrice = manager.getCropBuyPrice(cropData);
+            for(int i = 0;i<amount;i++){
+                newMarketPrice += 0.01;
+            }
+            manager.setCropBuyPrice(cropData,newMarketPrice);
+            player.getInventory().addItem(boughtItem);
+            player.sendMessage(ChatColor.GREEN + "You have bought " + ChatColor.YELLOW + amount + "x " + cropData.getDisplayName() + ChatColor.GREEN + " for an average price of " + ChatColor.YELLOW + "$"+averagePrice + ChatColor.GREEN + " each item.");
+            return true;
+        } else {
+            player.sendMessage(ChatColor.RED + "You don't have enough money to buy this.");
+        }
+        return false;
+    }
+    // TODO Loop bij prijs weergave zodat je de werkelijke prijs ziet zoals bij buyCrop class
 }

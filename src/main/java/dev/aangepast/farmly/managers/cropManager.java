@@ -19,7 +19,7 @@ public class cropManager {
 
     public static CropData getCrop(String rawName){
         for (CropData crop : crops){
-            if(crop.getRawName().equalsIgnoreCase(rawName)){
+            if(crop.getRawName().equalsIgnoreCase(rawName) || crop.getDisplayName().equalsIgnoreCase(rawName)){
                 return crop;
             }
         }

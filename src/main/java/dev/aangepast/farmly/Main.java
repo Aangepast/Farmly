@@ -56,6 +56,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new onBuildingPlace(this), this);
         Bukkit.getPluginManager().registerEvents(new onBuildingBuild(), this);
         Bukkit.getPluginManager().registerEvents(new onItemPickup(), this);
+        Bukkit.getPluginManager().registerEvents(new onInventoryClickOutsideHandler(), this);
         Bukkit.getPluginCommand("newprofile").setExecutor(new newProfile(this));
         Bukkit.getPluginCommand("deleteprofile").setExecutor(new deleteProfile(this));
         Bukkit.getPluginCommand("profile").setExecutor(new profileCommand());

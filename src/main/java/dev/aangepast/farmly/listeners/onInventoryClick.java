@@ -3,6 +3,8 @@ package dev.aangepast.farmly.listeners;
 import dev.aangepast.farmly.Main;
 import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.inventories.farmSettingsInventory;
+import dev.aangepast.farmly.managers.cropManager;
+import dev.aangepast.farmly.managers.marketManager;
 import dev.aangepast.farmly.managers.teleportManager;
 import dev.aangepast.farmly.utilities.ItemBuilder;
 import dev.aangepast.farmly.utilities.PlayerUtility;
@@ -15,6 +17,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
@@ -105,8 +108,6 @@ public class onInventoryClick implements Listener {
                 case 6:
                     farmSettingsInventory.openInventory(player);
                     break;
-                case -999:
-                    player.closeInventory();
             }
         } else if (e.getView().getTitle().contains(ChatColor.DARK_GRAY + "Farm settings")){
             Player player = (Player) e.getWhoClicked();
@@ -115,8 +116,13 @@ public class onInventoryClick implements Listener {
             Player player = (Player) e.getWhoClicked();
             e.setCancelled(true);
             switch(e.getRawSlot()){
-                case 13:
-                    // check right of left click
+                case 11:
+                    String[] invName = e.getView().getTitle().split("Trading: ");
+                    if(e.getClick() == ClickType.RIGHT){
+                        marketManager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 16);
+                    } else if (e.getClick()==ClickType.LEFT) {
+                        marketManager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 1);
+                    }
                     break;
             }
         }
