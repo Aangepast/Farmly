@@ -1,5 +1,10 @@
 package dev.aangepast.farmly.utilities;
 
+import dev.aangepast.farmly.Main;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +27,11 @@ public class Utils {
             );
         }
         return matcher.appendTail(buffer).toString();
+    }
+
+    public static FileConfiguration getWebhostConfig(Main plugin){
+        File file = new File(plugin.getDataFolder().getAbsolutePath() + "/webhost/config.yml");
+        return YamlConfiguration.loadConfiguration(file);
     }
 
 }
