@@ -9,7 +9,6 @@ import dev.aangepast.farmly.managers.buildingManager;
 import dev.aangepast.farmly.managers.cropManager;
 import dev.aangepast.farmly.managers.marketManager;
 import dev.aangepast.farmly.utilities.Utils;
-import dev.aangepast.farmly.webserver.MarketWebServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -148,10 +147,6 @@ public final class Main extends JavaPlugin {
             getLogger().warning("Market prices & cropData is not setup. Set it up in /server/market.yml");
         }
 
-        // Loading webserver
-        MarketWebServer webServer = new MarketWebServer(Utils.getWebhostConfig(this).getInt("port"));
-        webServer.initServer(this);
-
     }
 
     @Override
@@ -175,10 +170,6 @@ public final class Main extends JavaPlugin {
         FileConfiguration config3 = YamlConfiguration.loadConfiguration(file3);
         config3.set("day", currentDay);
         saveConfig(config3, file3);
-
-        // Disable webServer
-        MarketWebServer webServer = new MarketWebServer(Utils.getWebhostConfig(this).getInt("port"));
-        webServer.stopServer();
 
     }
 

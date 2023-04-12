@@ -29,9 +29,4 @@ public class Utils {
         return matcher.appendTail(buffer).toString();
     }
 
-    public static FileConfiguration getWebhostConfig(Main plugin){
-        File file = new File(plugin.getDataFolder().getAbsolutePath() + "/webhost/config.yml");
-        return YamlConfiguration.loadConfiguration(file);
-    }
-
 }
