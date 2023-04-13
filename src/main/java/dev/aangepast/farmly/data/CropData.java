@@ -11,6 +11,9 @@ public class CropData {
     private int defaultSellPrice;
     private org.bukkit.Material Material;
     private CropType cropType;
+    private double xp;
+    private int minDrops;
+    private int maxDrops;
 
     public int getCrowTime() {
         return crowTime;
@@ -66,5 +69,29 @@ public class CropData {
 
     public void setMaterial(Material material) {
         Material = material;
+    }
+
+    public double getXp() {
+        return xp;
+    }
+
+    public void setXp(double xp) {
+        this.xp = xp;
+    }
+
+    public int getMinDrops() {
+        return minDrops;
+    }
+
+    public void setMinDrops(int minDrops) {
+        this.minDrops = minDrops;
+    }
+
+    public int getMaxDrops() {
+        return maxDrops;
+    }
+
+    public void setMaxDrops(int maxDrops) {
+        this.maxDrops = maxDrops;
     }
 }

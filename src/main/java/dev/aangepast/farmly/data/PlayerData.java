@@ -14,6 +14,10 @@ public class PlayerData {
 
     private int levelCrafting;
     private int levelLifestock;
+    private int xpFarming;
+    private int xpCrafting;
+    private int xpForgaging;
+    private int xpLifestock;
     private boolean hasAccessTradeMarket;
 
     public double getCash() {
@@ -122,5 +126,37 @@ public class PlayerData {
 
     public void setHasAccessTradeMarket(boolean hasAccessTradeMarket) {
         this.hasAccessTradeMarket = hasAccessTradeMarket;
+    }
+
+    public int getXpFarming() {
+        return xpFarming;
+    }
+
+    public void setXpFarming(int xpFarming) {
+        this.xpFarming = xpFarming;
+    }
+
+    public int getXpCrafting() {
+        return xpCrafting;
+    }
+
+    public void setXpCrafting(int xpCrafting) {
+        this.xpCrafting = xpCrafting;
+    }
+
+    public int getXpForgaging() {
+        return xpForgaging;
+    }
+
+    public void setXpForgaging(int xpForgaging) {
+        this.xpForgaging = xpForgaging;
+    }
+
+    public int getXpLifestock() {
+        return xpLifestock;
+    }
+
+    public void setXpLifestock(int xpLifestock) {
+        this.xpLifestock = xpLifestock;
     }
 }

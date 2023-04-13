@@ -1,11 +1,18 @@
 package dev.aangepast.farmly.utilities;
 
 import dev.aangepast.farmly.Main;
+import dev.aangepast.farmly.data.CropData;
 import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.data.PlayerData;
+import dev.aangepast.farmly.managers.cropManager;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -87,6 +94,18 @@ public class PlayerUtility {
             return "N";
         }
         return null;
+    }
+
+    public static void breakBlock(Block block, Player player, ItemStack usedTool){
+        block.breakNaturally(usedTool);
+        CropData cropData = cropManager.getCrop(block.getType());
+        String[] StringXP = String.valueOf(cropData.getXp()).split("\\.");
+        int firstDecimal = Integer.parseInt(StringXP[0]);
+        int secondDecimal = Integer.parseInt(StringXP[1]);
+        PlayerData playerData = PlayerUtility.getPlayerData(player);
+        playerData.get
+        String msg = Utils.translateHexColorCodes("&#", "", "&#10fb83+ &#1bfb81" + firstDecimal + "&#26fb7e.&#31fb7c" + secondDecimal + " &#3cfb7aX&#47fc77P &#52fc75(&#5dfc73F&#68fc70a&#73fc6er&#7efc6cm&#89fc6ai&#94fc67n&#9ffc65g &#aafc63L&#b5fd60e&#c0fd5ev&#cbfd5ce&#d6fd59l&#e1fd57)");
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
     }
 
 }

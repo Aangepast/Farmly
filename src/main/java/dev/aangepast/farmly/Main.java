@@ -4,6 +4,7 @@ import dev.aangepast.farmly.commands.*;
 import dev.aangepast.farmly.data.Building;
 import dev.aangepast.farmly.data.CropData;
 import dev.aangepast.farmly.data.CropType;
+import dev.aangepast.farmly.data.chartData;
 import dev.aangepast.farmly.listeners.*;
 import dev.aangepast.farmly.managers.buildingManager;
 import dev.aangepast.farmly.managers.cropManager;
@@ -21,6 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public final class Main extends JavaPlugin {
 
@@ -37,6 +39,7 @@ public final class Main extends JavaPlugin {
     public Location nextSpot;
     public int currentDay;
     public marketManager market;
+    public List<chartData> charts;
 
     public void addFarmID(){
         currentFarmId = currentFarmId + 1;
@@ -131,12 +134,38 @@ public final class Main extends JavaPlugin {
                 crop.setRawName(key);
                 crop.setDisplayName(Utils.translateHexColorCodes("&#", "", ChatColor.translateAlternateColorCodes('&', config.getString(key+".displayname"))));
                 crop.setMaterial(Material.getMaterial(config.getString(key+".material")));
-                if(config.getString(key+".cropType").contains("CARROT")){
-                    crop.setCropType(CropType.CARROT);
-                } // maak hier later ff een switch van
+                switch(config.getString(key+".cropType")){
+                    case "CARROT":
+                        crop.setCropType(CropType.CARROT);
+                        break;
+                    case "POTATO":
+                        crop.setCropType(CropType.POTATO);
+                        break;
+                    case "BERRIES":
+                        crop.setCropType(CropType.BERRIES);
+                        break;
+                    case "WHEAT":
+                        crop.setCropType(CropType.WHEAT);
+                        break;
+                    case "MELON":
+                        crop.setCropType(CropType.MELON);
+                        break;
+                    case "PUMPKIN":
+                        crop.setCropType(CropType.PUMPKIN);
+                        break;
+                    case "BEET":
+                        crop.setCropType(CropType.BEETS);
+                        break;
+                    default:
+                        crop.setCropType(CropType.NONE);
+                        break;
+                }
                 crop.setCrowTime(config.getInt(key+".growTime"));
                 crop.setDefaultBuyPrice(config.getInt(key+".defaultBuyPrice"));
                 crop.setDefaultSellPrice(config.getInt(key+".defaultSellPrice"));
+                crop.setXp(config.getDouble(key+".XP"));
+                crop.setMaxDrops(config.getInt(key+".maxDrops"));
+                crop.setMinDrops(config.getInt(key+".minDrops"));
                 cropManager.addCrop(crop);
                 market.addCropBuyPrice(crop, config.getInt(key+".currentBuyPrice"));
                 market.addCropSellPrice(crop, config.getInt(key+".currentSellPrice"));

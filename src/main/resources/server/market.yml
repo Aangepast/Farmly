@@ -5,5 +5,44 @@ carrot:
   defaultBuyPrice: 5
   defaultSellPrice: 0.2
   currentBuyPrice: 5
+  minDrops: 1
+  maxDrops: 2
+  XP: 1.0
   currentSellPrice: 0.2
   material: "CARROT"
+wheat:
+  displayname: "&eWheat"
+  cropType: "CropType.WHEAT"
+  growTime: 25
+  defaultBuyPrice: 25
+  defaultSellPrice: 0.3
+  currentBuyPrice: 25
+  minDrops: 1
+  maxDrops: 3
+  XP: 1.5
+  currentSellPrice: 0.2
+  material: "WHEAT"
+Beets:
+  displayname: "&cBeetroot"
+  cropType: "CropType.BEETS"
+  growTime: 15
+  defaultBuyPrice: 15
+  defaultSellPrice: 0.25
+  currentBuyPrice: 5
+  minDrops: 1
+  maxDrops: 2
+  XP: 1.4
+  currentSellPrice: 0.25
+  material: "BEETROOT"
+Potato:
+  displayname: "&##ffbf00Potato"
+  cropType: "CropType.POTATO"
+  growTime: 30
+  defaultBuyPrice: 50
+  defaultSellPrice: 0.4
+  currentBuyPrice: 50
+  minDrops: 1
+  maxDrops: 2
+  XP: 1.6
+  currentSellPrice: 0.4
+  material: "POTATO"

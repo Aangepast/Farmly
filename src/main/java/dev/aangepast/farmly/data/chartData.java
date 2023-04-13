@@ -4,23 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class chartData {
-    private HashMap<HashMap<Double, Double>, CropType> allPricesHistory;
+    private HashMap<Integer, Double> chartData = new HashMap<>();
+    private String chartName;
 
-    private HashMap<Double, Double> priceHistoryEntry = new HashMap<>();
-
-    public HashMap<Double, Double> getPriceHistory() {
-        return priceHistoryEntry;
+    public HashMap<Integer, Double> getChartData() {
+        return chartData;
     }
 
-    public void setPriceHistory(HashMap<Double, Double> priceHistory) {
-        this.priceHistoryEntry = priceHistory;
+    public void setChartData(HashMap<Integer, Double> chartData) {
+        this.chartData = chartData;
     }
 
-    public HashMap<HashMap<Double, Double>, CropType> getAllPricesHistory() {
-        return allPricesHistory;
+    public String getChartName() {
+        return chartName;
     }
 
-    public void setAllPricesHistory(HashMap<HashMap<Double, Double>, CropType> allPricesHistory) {
-        this.allPricesHistory = allPricesHistory;
+    public void setChartName(String chartName) {
+        this.chartName = chartName;
     }
 }

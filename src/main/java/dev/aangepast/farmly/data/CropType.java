@@ -5,6 +5,10 @@ public enum CropType {
     CARROT,
     POTATO,
     WHEAT,
-    BEET
+    BEETS,
+    MELON,
+    PUMPKIN,
+    BERRIES,
+    NONE
 
 }

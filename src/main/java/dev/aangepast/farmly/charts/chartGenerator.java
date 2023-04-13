@@ -18,10 +18,6 @@ public class chartGenerator extends JFrame {
         frameInit(); // verander dit nog even
     }
 
-    private void initUI(){
-        CategoryDataset set = createChart()
-    }
-
 
     private JFreeChart createChart(CategoryDataset dataset, String name) {
 
@@ -47,10 +43,5 @@ public class chartGenerator extends JFrame {
         );
 
         return chart;
-    }
-
-    private CategoryDataset createDataset() {
-        double[][] data;
-        // doe hier iets met chartData
     }
 }
