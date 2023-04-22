@@ -32,11 +32,14 @@ public final class Main extends JavaPlugin {
     // TODO on building build werkt nog niet
     // TODO als je een nieuwe spot aanmaakt wordt het nog niet op spelers naam gezet
 
+    // TODO AUTO-SAVE TOEVOEGEN VOOR SPELERS TEGEN CRASH
+
     public HashMap<String, Entity> currentInteract = new HashMap<>();
 
     public int currentFarmId;
     public Location loginSpawn;
     public Location nextSpot;
+    public Location Spawn;
     public int currentDay;
     public marketManager market;
     public List<chartData> charts;
@@ -70,6 +73,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("date").setExecutor(new getDate(this));
         Bukkit.getPluginCommand("farm").setExecutor(new farmCommand(this));
         Bukkit.getPluginCommand("market").setExecutor(new marketCommand(this));
+        Bukkit.getPluginCommand("setspawn").setExecutor(new setSpawnCommand(this));
+        Bukkit.getPluginCommand("spawn").setExecutor(new spawnCommand(this));
 
         // Get farmId
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");
@@ -80,13 +85,14 @@ public final class Main extends JavaPlugin {
             currentFarmId = 0;
         }
 
-        // Get loginSpawn
+        // Get loginSpawn & spawn
         File file1 = new File(getDataFolder().getAbsolutePath() + "/server/login.yml");
         if(file1.exists()){
             FileConfiguration config = YamlConfiguration.loadConfiguration(file1);
             loginSpawn = config.getLocation("location");
+            Spawn = config.getLocation("spawn");
         } else {
-            Bukkit.getLogger().warning("Login spawn location is not set!!");
+            Bukkit.getLogger().warning("Login spawn & spawn location is not set!!");
         }
 
         // Get next spot

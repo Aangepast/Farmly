@@ -29,3 +29,8 @@ commands:
     usage: /<command>
   market:
     usage: /<command>
+  setspawn:
+    permission: admin
+    usage: /<command>
+  spawn:
+    usage: /<command>
