@@ -103,7 +103,6 @@ public class PlayerUtility {
         int firstDecimal = Integer.parseInt(StringXP[0]);
         int secondDecimal = Integer.parseInt(StringXP[1]);
         PlayerData playerData = PlayerUtility.getPlayerData(player);
-        playerData.get
         String msg = Utils.translateHexColorCodes("&#", "", "&#10fb83+ &#1bfb81" + firstDecimal + "&#26fb7e.&#31fb7c" + secondDecimal + " &#3cfb7aX&#47fc77P &#52fc75(&#5dfc73F&#68fc70a&#73fc6er&#7efc6cm&#89fc6ai&#94fc67n&#9ffc65g &#aafc63L&#b5fd60e&#c0fd5ev&#cbfd5ce&#d6fd59l&#e1fd57)");
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
     }

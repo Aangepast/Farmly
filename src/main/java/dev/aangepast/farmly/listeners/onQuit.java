@@ -3,6 +3,7 @@ package dev.aangepast.farmly.listeners;
 import dev.aangepast.farmly.Main;
 import dev.aangepast.farmly.data.FarmData;
 import dev.aangepast.farmly.data.PlayerData;
+import dev.aangepast.farmly.utilities.FarmUtilities;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -70,6 +71,7 @@ public class onQuit implements Listener {
         plugin.currentInteract.remove(e.getPlayer().getUniqueId().toString());
 
         PlayerUtility.setPlayerData(e.getPlayer(), null);
+        PlayerUtility.setFarmData(e.getPlayer(), null);
 
     }
 
