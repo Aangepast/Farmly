@@ -40,3 +40,6 @@ commands:
       - bal
       - money
       - cash
+  setbalance:
+    usage: /<command>
+    permission: admin
