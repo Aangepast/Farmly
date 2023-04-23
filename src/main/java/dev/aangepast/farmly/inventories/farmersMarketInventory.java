@@ -30,10 +30,10 @@ public class farmersMarketInventory {
         // maak item nog ff verder af met right click for sell all en left click for 1 sell
         // misschien ook nog ff dynamische prijzen maken?
 
-        inventory.setItem(13,item);
+        inventory.setItem(13,tradeItem);
         inventory.setItem(15,sellItem);
         inventory.setItem(11,buyItem);
-        inventory.setItem(31, chartsItem);
+        inventory.setItem(31,chartsItem);
 
         player.openInventory(inventory);
 
