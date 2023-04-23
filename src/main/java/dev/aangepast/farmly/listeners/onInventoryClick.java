@@ -115,13 +115,14 @@ public class onInventoryClick implements Listener {
         } else if (e.getView().getTitle().contains(ChatColor.DARK_GRAY + "Trading: ")){
             Player player = (Player) e.getWhoClicked();
             e.setCancelled(true);
+            marketManager manager = plugin.market;
             switch(e.getRawSlot()){
                 case 11:
                     String[] invName = e.getView().getTitle().split("Trading: ");
                     if(e.getClick() == ClickType.RIGHT){
-                        marketManager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 16);
+                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 16);
                     } else if (e.getClick()==ClickType.LEFT) {
-                        marketManager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 1);
+                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 1);
                     }
                     break;
             }

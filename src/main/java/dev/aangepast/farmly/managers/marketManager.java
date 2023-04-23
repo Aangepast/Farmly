@@ -2,6 +2,7 @@ package dev.aangepast.farmly.managers;
 
 import dev.aangepast.farmly.data.CropData;
 import dev.aangepast.farmly.data.PlayerData;
+import dev.aangepast.farmly.interfaces.Market;
 import dev.aangepast.farmly.utilities.ItemBuilder;
 import dev.aangepast.farmly.utilities.PlayerUtility;
 import org.bukkit.ChatColor;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class marketManager {
+public class marketManager implements Market {
 
     private HashMap<CropData, Double> cropSellPrices = new HashMap<>();
     private HashMap<CropData, Double> cropBuyPrices = new HashMap<>();
@@ -86,7 +87,7 @@ public class marketManager {
         return amount;
     }
 
-    public static boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount){
+    public boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount){
 
         player.sendMessage(ChatColor.GRAY + "Purchasing...");
 
@@ -103,11 +104,10 @@ public class marketManager {
             ItemStack boughtItem = new ItemBuilder(cropData.getMaterial(), amount).toItemStack();
 
             int counter = 0;
-            boolean broke = false;
 
             for(ItemStack item : player.getInventory().getContents()){
-                if(item == null){break;}
-                if(item.getType().equals(Material.AIR)){break;}
+                if(item == null){counter += 64;continue;}
+                if(item.getType().equals(Material.AIR)){counter += 64;continue;}
                 if(item.equals(boughtItem)){
                     counter += item.getMaxStackSize()-item.getAmount();
                     if(counter >= amount){
@@ -115,8 +115,6 @@ public class marketManager {
                     }
                 }
             }
-
-            // verzin iets zodat als ie breaked dat het niet gelijk not enough inv space is
 
             if(amount > counter){
                 player.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
@@ -135,6 +133,11 @@ public class marketManager {
         } else {
             player.sendMessage(ChatColor.RED + "You don't have enough money to buy this.");
         }
+        return false;
+    }
+
+    @Override
+    public boolean sellCrop(Player player, marketManager manager, CropData cropData, int amount) {
         return false;
     }
     // TODO Loop bij prijs weergave zodat je de werkelijke prijs ziet zoals bij buyCrop class
