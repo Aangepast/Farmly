@@ -75,6 +75,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("market").setExecutor(new marketCommand(this));
         Bukkit.getPluginCommand("setspawn").setExecutor(new setSpawnCommand(this));
         Bukkit.getPluginCommand("spawn").setExecutor(new spawnCommand(this));
+        Bukkit.getPluginCommand("balance").setExecutor(new balanceCommand());
 
         // Get farmId
         File file = new File(getDataFolder().getAbsolutePath() + "/server/farmId.yml");

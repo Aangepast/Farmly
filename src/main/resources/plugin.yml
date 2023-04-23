@@ -34,3 +34,9 @@ commands:
     usage: /<command>
   spawn:
     usage: /<command>
+  balance:
+    usage: /<command>
+    aliases:
+      - bal
+      - money
+      - cash
