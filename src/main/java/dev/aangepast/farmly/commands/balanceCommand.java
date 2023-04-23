@@ -21,7 +21,7 @@ public class balanceCommand implements CommandExecutor {
         double cash = playerData.getCash();
 
         player.playSound(player.getLocation(), "block.note_block.pling",1,1);
-        player.sendMessage(ChatColor.GREEN + "You currently have " + ChatColor.YELLOW + "$"+cash+ChatColor.GREEN + " .");
+        player.sendMessage(ChatColor.GREEN + "You currently have " + ChatColor.YELLOW + "$"+cash+ChatColor.GREEN + ".");
 
         return true;
     }

@@ -28,7 +28,8 @@ public class setBalanceCommand implements CommandExecutor {
         double amount = Double.parseDouble(args[0]);
 
         targetData.setCash(amount);
-        target.sendMessage(ChatColor.GREEN + "Your balance has been changed from " + ChatColor.YELLOW + "$" + oldAmount + ChatColor.GREEN + " to " + ChatColor.YELLOW + "$" +amount + ChatColor.GREEN + ".");
+        target.sendMessage(ChatColor.GREEN + "Your balance has changed from " + ChatColor.YELLOW + "$" + oldAmount + ChatColor.GREEN + " to " + ChatColor.YELLOW + "$" +amount + ChatColor.GREEN + ".");
+        player.sendMessage(ChatColor.GREEN + "Changed balance of " + target.getName() + "!");
 
         return true;
     }
