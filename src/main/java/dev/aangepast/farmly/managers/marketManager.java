@@ -97,9 +97,9 @@ public class marketManager implements Market {
         PlayerData user = PlayerUtility.getPlayerData(player);
 
         double tempPrice = manager.getCropBuyPrice(cropData);
-        for(int i = 0;i<amount;i++){
-            tempPrice += 0.01;
-        }
+        for(int i = 0;i<amount;i++){tempPrice += 0.01;}
+        tempPrice = tempPrice * amount;
+
         double averagePrice = tempPrice / amount;
 
         if(user.getCash() >= tempPrice){
@@ -131,7 +131,7 @@ public class marketManager implements Market {
             }
             manager.setCropBuyPrice(cropData,newMarketPrice);
             player.getInventory().addItem(boughtItem);
-            player.sendMessage(ChatColor.GREEN + "You have bought " + ChatColor.YELLOW + amount + "x " + cropData.getDisplayName() + ChatColor.GREEN + " for an average price of " + ChatColor.YELLOW + "$"+averagePrice + ChatColor.GREEN + " each item.");
+            player.sendMessage(ChatColor.GREEN + "You have bought " + ChatColor.YELLOW + amount + "x " + cropData.getDisplayName() + ChatColor.GREEN + " for " + ChatColor.YELLOW + "$" + tempPrice + ChatColor.GREEN + " and for an average price " + ChatColor.YELLOW + "$"+averagePrice + ChatColor.GREEN + " each item.");
             return true;
         } else {
             player.sendMessage(ChatColor.RED + "You don't have enough money to buy this.");
