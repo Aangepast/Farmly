@@ -4,7 +4,7 @@ carrot:
   growTime: 20
   defaultBuyPrice: 5
   defaultSellPrice: 0.2
-  currentBuyPrice: 5
+  currentBuyPrice: 5.0
   minDrops: 1
   maxDrops: 2
   XP: 1.0
@@ -16,7 +16,7 @@ wheat:
   growTime: 25
   defaultBuyPrice: 25
   defaultSellPrice: 0.3
-  currentBuyPrice: 25
+  currentBuyPrice: 25.0
   minDrops: 1
   maxDrops: 3
   XP: 1.5
@@ -28,7 +28,7 @@ Beets:
   growTime: 15
   defaultBuyPrice: 15
   defaultSellPrice: 0.25
-  currentBuyPrice: 5
+  currentBuyPrice: 5.0
   minDrops: 1
   maxDrops: 2
   XP: 1.4
@@ -40,7 +40,7 @@ Potato:
   growTime: 30
   defaultBuyPrice: 50
   defaultSellPrice: 0.4
-  currentBuyPrice: 50
+  currentBuyPrice: 50.0
   minDrops: 1
   maxDrops: 2
   XP: 1.6

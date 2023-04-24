@@ -7,8 +7,8 @@ public class CropData {
     private int crowTime;
     private String displayName;
     private String rawName;
-    private int defaultBuyPrice;
-    private int defaultSellPrice;
+    private double defaultBuyPrice;
+    private double defaultSellPrice;
     private org.bukkit.Material Material;
     private CropType cropType;
     private double xp;
@@ -39,19 +39,19 @@ public class CropData {
         this.rawName = rawName;
     }
 
-    public int getDefaultBuyPrice() {
+    public double getDefaultBuyPrice() {
         return defaultBuyPrice;
     }
 
-    public void setDefaultBuyPrice(int defaultBuyPrice) {
+    public void setDefaultBuyPrice(double defaultBuyPrice) {
         this.defaultBuyPrice = defaultBuyPrice;
     }
 
-    public int getDefaultSellPrice() {
+    public double getDefaultSellPrice() {
         return defaultSellPrice;
     }
 
-    public void setDefaultSellPrice(int defaultSellPrice) {
+    public void setDefaultSellPrice(double defaultSellPrice) {
         this.defaultSellPrice = defaultSellPrice;
     }
 

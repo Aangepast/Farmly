@@ -169,14 +169,14 @@ public final class Main extends JavaPlugin {
                         break;
                 }
                 crop.setCrowTime(config.getInt(key+".growTime"));
-                crop.setDefaultBuyPrice(config.getInt(key+".defaultBuyPrice"));
-                crop.setDefaultSellPrice(config.getInt(key+".defaultSellPrice"));
+                crop.setDefaultBuyPrice(config.getDouble(key+".defaultBuyPrice"));
+                crop.setDefaultSellPrice(config.getDouble(key+".defaultSellPrice"));
                 crop.setXp(config.getDouble(key+".XP"));
                 crop.setMaxDrops(config.getInt(key+".maxDrops"));
                 crop.setMinDrops(config.getInt(key+".minDrops"));
                 cropManager.addCrop(crop);
-                market.addCropBuyPrice(crop, config.getInt(key+".currentBuyPrice"));
-                market.addCropSellPrice(crop, config.getInt(key+".currentSellPrice"));
+                market.addCropBuyPrice(crop, config.getDouble(key+".currentBuyPrice"));
+                market.addCropSellPrice(crop, config.getDouble(key+".currentSellPrice"));
             }
             this.market = market;
             getLogger().info("Loaded market prices & cropData");
@@ -208,6 +208,15 @@ public final class Main extends JavaPlugin {
         config3.set("day", currentDay);
         saveConfig(config3, file3);
 
+        // Save market prices
+        File file4 = new File(this.getDataFolder().getAbsolutePath() + "/server/market.yml");
+        FileConfiguration config4 = YamlConfiguration.loadConfiguration(file4);
+        for(CropData crop : cropManager.getCrops()){
+            config4.set(crop.getRawName()+".currentBuyPrice", market.getCropBuyPrice(crop));
+            config4.set(crop.getRawName()+".currentSellPrice", market.getCropSellPrice(crop));
+            getLogger().info("Saved crop data for " + crop.getRawName());
+        }
+        saveConfig(config4, file4);
     }
 
     public void saveConfig(FileConfiguration config, File file){
