@@ -1,6 +1,7 @@
 package dev.aangepast.farmly.utilities;
 
 import dev.aangepast.farmly.Main;
+import dev.aangepast.farmly.data.CropData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -27,6 +28,24 @@ public class Utils {
             );
         }
         return matcher.appendTail(buffer).toString();
+    }
+
+    public static double calculateMarketPrice(int amount, CropData cropData, Main plugin, boolean buy){
+        double actualPrice = 0;
+        if(buy){
+            double tempPrice = plugin.market.getCropBuyPrice(cropData);
+            for(int i = 0;i<amount;i++){
+                tempPrice += 0.01;
+                actualPrice += tempPrice;
+            }
+        } else {
+            double tempPrice = plugin.market.getCropSellPrice(cropData);
+            for(int i = 0;i<amount;i++){
+                tempPrice -= 0.0001;
+                actualPrice += tempPrice;
+            }
+        }
+        return actualPrice;
     }
 
 }

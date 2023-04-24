@@ -90,15 +90,14 @@ public class marketManager implements Market {
         return amount;
     }
 
-    public boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount){
+    public boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount, Main plugin){
 
         player.sendMessage(ChatColor.GRAY + "Purchasing...");
 
         PlayerData user = PlayerUtility.getPlayerData(player);
 
-        double tempPrice = manager.getCropBuyPrice(cropData);
-        for(int i = 0;i<amount;i++){tempPrice += 0.01;}
-        tempPrice = tempPrice * amount;
+        // Actual price calculator
+        double tempPrice = Utils.calculateMarketPrice(amount, cropData, plugin, true);
 
         double averagePrice = tempPrice / amount;
 
@@ -140,7 +139,7 @@ public class marketManager implements Market {
     }
 
     @Override
-    public boolean sellCrop(Player player, marketManager manager, CropData cropData, int amount) {
+    public boolean sellCrop(Player player, marketManager manager, CropData cropData, int amount, Main plugin) {
         return false;
     }
 

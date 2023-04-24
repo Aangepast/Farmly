@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public interface Market {
 
     // Testing purposes only, might use in real time plugin
-    boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount);
-    boolean sellCrop(Player player, marketManager manager, CropData cropData, int amount);
+    boolean buyCrop(Player player, marketManager manager, CropData cropData, int amount, Main plugin);
+    boolean sellCrop(Player player, marketManager manager, CropData cropData, int amount, Main plugin);
     void refreshInventory(Player player, String inventoryTitle, marketManager manager, CropData cropData, Main plugin);
 }

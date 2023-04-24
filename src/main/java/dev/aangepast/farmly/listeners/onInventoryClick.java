@@ -120,9 +120,9 @@ public class onInventoryClick implements Listener {
                 case 11:
                     String[] invName = e.getView().getTitle().split("Trading: ");
                     if(e.getClick() == ClickType.RIGHT){
-                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 16);
+                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 16, plugin);
                     } else if (e.getClick()==ClickType.LEFT) {
-                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 1);
+                        manager.buyCrop(player, plugin.market, cropManager.getCrop(invName[1]), 1, plugin);
                     }
                     break;
             }
