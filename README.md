@@ -5,4 +5,6 @@ Includes Dynamic Markets for selling products, Automatic graph creation for mark
 
 90% of bugs
 
+[Project discontinued]
+
 Farmly.minehut.gg
